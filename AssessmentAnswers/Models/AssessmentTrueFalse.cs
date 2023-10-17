@@ -5,8 +5,9 @@ namespace AssessmentAnswers.Models
     public class AssessmentTrueFalse
     {
         public int Id { get; set; }
+        public string Question { get; set; }
 
         [ForeignKey("AssessmentQuestion")]
-        public string Question { get; set; }
+        public int AssessmentQuestionId { get; set; }
     }
 }

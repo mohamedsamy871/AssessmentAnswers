@@ -6,8 +6,8 @@ namespace AssessmentAnswers.Models
     {
         public int Id { get; set; }
         public string Answer { get; set; }
-        public int Score { get; set; }
+        public int? Score { get; set; }
         [ForeignKey("AssessmentQuestion")]
-        public int QuestionId { get; set; }
+        public int AssessmentQuestionId { get; set; }
     }
 }

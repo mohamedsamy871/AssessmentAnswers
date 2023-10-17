@@ -4,6 +4,7 @@ using AssessmentAnswers.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssessmentAnswers.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231017105543_AdjustingAssessmentTrueFalseTable2")]
+    partial class AdjustingAssessmentTrueFalseTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,10 @@ namespace AssessmentAnswers.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AssessmentQuestionId")
+                    b.Property<int?>("AssessmentQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Score")
@@ -95,12 +100,15 @@ namespace AssessmentAnswers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AssessmentQuestionId")
+                    b.Property<int?>("AssessmentQuestionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -117,12 +125,15 @@ namespace AssessmentAnswers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AssessmentQuestionId")
+                    b.Property<int?>("AssessmentQuestionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -178,12 +189,15 @@ namespace AssessmentAnswers.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AssessmentQuestionId")
+                    b.Property<int?>("AssessmentQuestionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -246,9 +260,7 @@ namespace AssessmentAnswers.Migrations
                 {
                     b.HasOne("AssessmentAnswers.Models.AssessmentQuestion", null)
                         .WithMany("AssessmentAnswers")
-                        .HasForeignKey("AssessmentQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssessmentQuestionId");
                 });
 
             modelBuilder.Entity("AssessmentAnswers.Models.AssessmentEnrol", b =>
@@ -270,18 +282,14 @@ namespace AssessmentAnswers.Migrations
                 {
                     b.HasOne("AssessmentAnswers.Models.AssessmentQuestion", null)
                         .WithMany("AssessmentMatch")
-                        .HasForeignKey("AssessmentQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssessmentQuestionId");
                 });
 
             modelBuilder.Entity("AssessmentAnswers.Models.AssessmentOption", b =>
                 {
                     b.HasOne("AssessmentAnswers.Models.AssessmentQuestion", null)
                         .WithMany("AssessmentOptions")
-                        .HasForeignKey("AssessmentQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssessmentQuestionId");
                 });
 
             modelBuilder.Entity("AssessmentAnswers.Models.AssessmentQuestionRelation", b =>
@@ -305,9 +313,7 @@ namespace AssessmentAnswers.Migrations
                 {
                     b.HasOne("AssessmentAnswers.Models.AssessmentQuestion", null)
                         .WithMany("AssessmentText")
-                        .HasForeignKey("AssessmentQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssessmentQuestionId");
                 });
 
             modelBuilder.Entity("AssessmentAnswers.Models.AssessmentTrueFalse", b =>

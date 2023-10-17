@@ -8,7 +8,7 @@ namespace AssessmentAnswers.Models
         public string Question { get; set; }
 
         [ForeignKey("AssessmentQuestion")]
-        public int QuestionId { get; set; }
+        public int AssessmentQuestionId { get; set; }
 
     }
 

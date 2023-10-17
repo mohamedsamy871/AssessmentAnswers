@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public AssessmentQuestionType QuestionType { get; set; }
-        public ICollection<AssessmentQuestionRelation> AssessmentQuestionRelation { get; set; }
         public ICollection<AssessmentMatch> AssessmentMatch { get; set; }
         public ICollection<AssessmentOption> AssessmentOptions { get; set; }
         public ICollection<AssessmentText> AssessmentText { get; set; }

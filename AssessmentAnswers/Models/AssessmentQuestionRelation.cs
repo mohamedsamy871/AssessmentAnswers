@@ -11,5 +11,6 @@ namespace AssessmentAnswers.Models
 
         [ForeignKey("AssessmentQuestion")]
         public int AssessmentQuestionId { get; set; }
+        public AssessmentQuestion AssessmentQuestion { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace AssessmentAnswers.Controllers
@@ -46,6 +47,31 @@ namespace AssessmentAnswers.Controllers
                         break;
                 }
                 return Ok(assessmentQuestions); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+        [HttpPost("SaveAnswer")]
+        public async Task<IActionResult> SaveAnswer([FromForm][Required] int questionId, [FromForm][Required] string answer, [FromForm] int? score)
+        {
+            try
+            {
+                var questions = _db.AssessmentQuestions.Find(questionId);
+                if (questions == null) return BadRequest();
+                var answersFromdb = await _db.AssessmentAnswers.Where(m => m.AssessmentQuestionId == questionId).FirstOrDefaultAsync();
+                if (answersFromdb == null)
+                {
+                    var assessmentQuestionRelation = _db.AssessmentQuestionRelations.Where(m => m.AssessmentQuestionId == questionId).FirstOrDefault();
+                    await _db.AssessmentAnswers.AddAsync(new AssessmentAnswer { Answer = answer, AssessmentQuestionId = questionId, Score = score, });
+                }
+                else
+                {
+                    answersFromdb.Answer = answer;
+                }
+                await _db.SaveChangesAsync();
+                return Ok(questionId);
             }
             catch (Exception ex)
             {
